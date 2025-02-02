@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/view/screen/auth/signup.dart';
+import 'package:flutter_application_depi/view/screen/auth/login.dart';
 import 'package:flutter_application_depi/view/widget/auth/custombuttonauth.dart';
 import 'package:flutter_application_depi/view/widget/auth/customtextformauth.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Signup extends StatefulWidget {
+  const Signup({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,17 +27,15 @@ class _LoginState extends State<Login> {
         
         children: [
           
-          const SizedBox(height: 200,),
-          Container(margin:const EdgeInsets.symmetric(horizontal: 60),child: const Text("Signin for stay fit",style: TextStyle(fontSize: 30,color: Colors.white))),
+          const SizedBox(height: 100,),
+          Container(margin:const EdgeInsets.symmetric(horizontal: 60),child: const Text("Signup for stay fit",style: TextStyle(fontSize: 30,color: Colors.white))),
           const SizedBox(height: 80,),
+          const Customtextformauth(hinttext: "Enter Your Username", LabelText: "Username", icondata: Icons.person,  isNumber: false,),
           const Customtextformauth(hinttext: "abc1123@gmail.com", LabelText: "Email", icondata: Icons.email,  isNumber: false,),
+          const Customtextformauth(hinttext: "Enter Your Phone Number", LabelText: "Phone", icondata: Icons.phone,  isNumber: false,),
           const Customtextformauth(hinttext: "Enter Your Password", LabelText: "Password", icondata: Icons.lock,  isNumber: false,obscureText: true,),
           const SizedBox(height: 30,),
-          const Custombuttonauth(text: "Signin"),
-          MaterialButton(onPressed: (){
-          },
-          child: const Text("Forget Password?",style: TextStyle(fontSize: 20,color: Colors.grey),),
-          ),
+          const Custombuttonauth(text: "SignUp"),
           Container(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,11 +43,11 @@ class _LoginState extends State<Login> {
             
             children: [
               
-              const Text("Don't have account?",style: TextStyle(fontSize: 20,color: Colors.grey),),
+              const Text("Already have an account?",style: TextStyle(fontSize: 20,color: Colors.grey),),
               MaterialButton(onPressed: (){
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Signup()));
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const Login()));
               },
-              child: const Text("Sign up",style: TextStyle(fontSize: 20,color: Colors.grey),),
+              child: const Text("Login",style: TextStyle(fontSize: 20,color: Colors.grey),),
               ),
             ],
           )
