@@ -1,0 +1,27 @@
+import 'package:flutter/material.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter_application_depi/view/screen/onBoarding_screen/onBoarding_screen.dart';
+import 'package:lottie/lottie.dart';
+
+class Splashscreen extends StatefulWidget {
+  const Splashscreen({super.key});
+
+  @override
+  State<Splashscreen> createState() => _SplashscreenState();
+}
+
+class _SplashscreenState extends State<Splashscreen> {
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedSplashScreen(
+      splash: Center(
+        child: Lottie.asset('assets/splash.json',width: 650,height: 650),
+      ),
+      nextScreen: const OnboardingScreen(),
+      splashTransition: SplashTransition.fadeTransition,
+      backgroundColor: const Color.fromARGB(255, 4, 44, 78),
+      duration: 3000,
+      splashIconSize: 200.0,
+    );
+  }
+}

@@ -7,28 +7,30 @@ class Customtextformauth extends StatelessWidget {
   // ignore: non_constant_identifier_names
   final String LabelText;
   final IconData icondata;
-  final TextEditingController mycontroller;
-  final String? Function(String?)? validator;
+  //final TextEditingController mycontroller;
+  //final String? Function(String?)? validator;
   final bool isNumber;
   final bool? obscureText;
   final void Function()? onTapIcon;
   // ignore: non_constant_identifier_names
-  const Customtextformauth({super.key,this.onTapIcon,this.obscureText, required this.hinttext, required this.LabelText, required this.icondata, required this.mycontroller,required this.validator, required this.isNumber});
+  const Customtextformauth({super.key,this.onTapIcon,this.obscureText, required this.hinttext, required this.LabelText, required this.icondata,  required this.isNumber});
   
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 20),
       child: TextFormField(
-        validator: validator,
+        style: const TextStyle(color: Colors.white),
+        //validator: validator,
         keyboardType: isNumber?const TextInputType.numberWithOptions(decimal: true):TextInputType.text,
-            controller: mycontroller,
+            
+            //controller: mycontroller,
             obscureText: obscureText==null || obscureText==false? false : true ,
             decoration: InputDecoration(
               hintText: hinttext,
               hintStyle: const TextStyle(fontSize: 14,color: AppColor.grey),
               contentPadding: const EdgeInsets.symmetric(vertical: 5,horizontal: 30),
-              label: Container(margin: const EdgeInsets.symmetric(horizontal: 7),child: Text(LabelText),),
+              label: Container(margin: const EdgeInsets.symmetric(horizontal: 7),child: Text(LabelText,style:const TextStyle(color: Colors.white),),),
               suffixIcon: InkWell(
                 onTap: onTapIcon,
                 child: Icon(icondata),
@@ -39,6 +41,7 @@ class Customtextformauth extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               )
             ),
+
           ),
     );
   }

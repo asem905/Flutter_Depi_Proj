@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart';
 
 class Custombuttonauth extends StatelessWidget {
   final String text;
@@ -9,16 +8,21 @@ class Custombuttonauth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 10),
-      child: MaterialButton(onPressed: onPressed,
-      shape: const RoundedRectangleBorder(
+      margin: const EdgeInsets.symmetric(horizontal: 30),
+      decoration: const BoxDecoration(
+        color: Colors.white,
         borderRadius: BorderRadius.all(Radius.circular(30)),
       ),
-    padding: const EdgeInsets.all(13),
-    color: AppColor.primaryColor,
-    textColor: Colors.white,
-    child:Text(text),
+      child: MaterialButton(onPressed: onPressed,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(60)),
+      ),
+      padding: const EdgeInsets.all(5),
+      color: Colors.black,
+      textColor: Color.fromARGB(120,60,20,150),
+      child:Text(text,style: const TextStyle(fontSize: 25),),
     ),
     );
+    
   }
 }
