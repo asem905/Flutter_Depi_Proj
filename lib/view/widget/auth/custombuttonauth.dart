@@ -19,7 +19,7 @@ class Custombuttonauth extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(5),
       color: Colors.black,
-      textColor: Color.fromARGB(120,60,20,150),
+      textColor: Colors.white,
       child:Text(text,style: const TextStyle(fontSize: 25),),
     ),
     );

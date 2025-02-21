@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:flutter_application_depi/view/screen/auth/login.dart';
 import 'package:flutter_application_depi/view/screen/onBoarding_screen/onBoarding_screen.dart';
 import 'package:lottie/lottie.dart';
 
@@ -17,7 +18,7 @@ class _SplashscreenState extends State<Splashscreen> {
       splash: Center(
         child: Lottie.asset('assets/splash.json',width: 650,height: 650),
       ),
-      nextScreen: const OnboardingScreen(),
+      nextScreen: const Login(),
       splashTransition: SplashTransition.fadeTransition,
       backgroundColor: const Color.fromARGB(255, 4, 44, 78),
       duration: 3000,

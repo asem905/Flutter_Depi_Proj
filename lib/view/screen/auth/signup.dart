@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_depi/view/screen/auth/forgetpassword/checkemail.dart';
 import 'package:flutter_application_depi/view/screen/auth/login.dart';
 import 'package:flutter_application_depi/view/widget/auth/custombuttonauth.dart';
 import 'package:flutter_application_depi/view/widget/auth/customtextformauth.dart';
@@ -35,7 +36,7 @@ class _SignupState extends State<Signup> {
           const Customtextformauth(hinttext: "Enter Your Phone Number", LabelText: "Phone", icondata: Icons.phone,  isNumber: false,),
           const Customtextformauth(hinttext: "Enter Your Password", LabelText: "Password", icondata: Icons.lock,  isNumber: false,obscureText: true,),
           const SizedBox(height: 30,),
-          const Custombuttonauth(text: "SignUp"),
+          Custombuttonauth(text: "SignUp",onPressed: (){Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const CheckEmail()));},),
           Container(height: 20,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
