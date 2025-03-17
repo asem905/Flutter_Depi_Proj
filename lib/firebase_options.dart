@@ -41,46 +41,53 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBppdZ-cX8jBO21f1mrCpN7BCRdsox-dTE',
-    appId: '1:388737115031:web:9506de7c62b0edc4a31ad2',
-    messagingSenderId: '388737115031',
-    projectId: 'realecommerce-fb194',
-    authDomain: 'realecommerce-fb194.firebaseapp.com',
-    storageBucket: 'realecommerce-fb194.firebasestorage.app',
+    apiKey: 'AIzaSyAIy4_jQeMk3BDQLM4n8CpIFiTTabx1EyE',
+    appId: '1:819905247319:web:6a8861d9ed0de80b010b12',
+    messagingSenderId: '819905247319',
+    projectId: 'fluttercourse-5af65',
+    authDomain: 'fluttercourse-5af65.firebaseapp.com',
+    storageBucket: 'fluttercourse-5af65.appspot.com',
+    measurementId: 'G-5N7LQ39D2Y',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCKVtOfknJdKVTfafY-cbK6GkUuEwtiYKc',
-    appId: '1:388737115031:android:db2a8a9e08e37db0a31ad2',
-    messagingSenderId: '388737115031',
-    projectId: 'realecommerce-fb194',
-    storageBucket: 'realecommerce-fb194.firebasestorage.app',
+    apiKey: 'AIzaSyBMy968UAI1YI71Mg2vHQikFqNEDra4_o8',
+    appId: '1:819905247319:android:da32dbf68ec1b0e8010b12',
+    messagingSenderId: '819905247319',
+    projectId: 'fluttercourse-5af65',
+    storageBucket: 'fluttercourse-5af65.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyCc5VUW_ydo2OkbrqyOTC7PWAlrUuStPwE',
-    appId: '1:388737115031:ios:4d2fea3720029d42a31ad2',
-    messagingSenderId: '388737115031',
-    projectId: 'realecommerce-fb194',
-    storageBucket: 'realecommerce-fb194.firebasestorage.app',
-    iosBundleId: 'com.example.ecommerce',
+    apiKey: 'AIzaSyDIyqcrFHoZyE1YUzOZcD7ZyPVYaBc7LIM',
+    appId: '1:819905247319:ios:df3b10c5aa39de47010b12',
+    messagingSenderId: '819905247319',
+    projectId: 'fluttercourse-5af65',
+    storageBucket: 'fluttercourse-5af65.appspot.com',
+    androidClientId: '819905247319-ma8bouc9922p3gvop23btmba7pr5a9h8.apps.googleusercontent.com',
+    iosClientId: '819905247319-ep7v403mv1ikf8p7lrnppm19g96b1t15.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterApplicationDepi',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyCc5VUW_ydo2OkbrqyOTC7PWAlrUuStPwE',
-    appId: '1:388737115031:ios:4d2fea3720029d42a31ad2',
-    messagingSenderId: '388737115031',
-    projectId: 'realecommerce-fb194',
-    storageBucket: 'realecommerce-fb194.firebasestorage.app',
-    iosBundleId: 'com.example.ecommerce',
+    apiKey: 'AIzaSyDIyqcrFHoZyE1YUzOZcD7ZyPVYaBc7LIM',
+    appId: '1:819905247319:ios:df3b10c5aa39de47010b12',
+    messagingSenderId: '819905247319',
+    projectId: 'fluttercourse-5af65',
+    storageBucket: 'fluttercourse-5af65.appspot.com',
+    androidClientId: '819905247319-ma8bouc9922p3gvop23btmba7pr5a9h8.apps.googleusercontent.com',
+    iosClientId: '819905247319-ep7v403mv1ikf8p7lrnppm19g96b1t15.apps.googleusercontent.com',
+    iosBundleId: 'com.example.flutterApplicationDepi',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyBppdZ-cX8jBO21f1mrCpN7BCRdsox-dTE',
-    appId: '1:388737115031:web:7376807fb87b9ed1a31ad2',
-    messagingSenderId: '388737115031',
-    projectId: 'realecommerce-fb194',
-    authDomain: 'realecommerce-fb194.firebaseapp.com',
-    storageBucket: 'realecommerce-fb194.firebasestorage.app',
+    apiKey: 'AIzaSyAIy4_jQeMk3BDQLM4n8CpIFiTTabx1EyE',
+    appId: '1:819905247319:web:a5f2ce885d11bcc7010b12',
+    messagingSenderId: '819905247319',
+    projectId: 'fluttercourse-5af65',
+    authDomain: 'fluttercourse-5af65.firebaseapp.com',
+    storageBucket: 'fluttercourse-5af65.appspot.com',
+    measurementId: 'G-R7VP802N3S',
   );
+
 }

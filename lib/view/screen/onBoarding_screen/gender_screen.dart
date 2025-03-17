@@ -1,80 +1,90 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/custom_gender_container.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/customcontainer.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/weightscreen.dart';
+import 'package:flutter_application_depi/constants/color.dart';
+import 'package:flutter_application_depi/view/widget/custom_onboarding_widgets/custom_select_gender.dart';
+import 'package:flutter_application_depi/view/widget/custom_onboarding_widgets/cutom_positioned_arrow.dart';
+import 'package:flutter_application_depi/view/screen/onBoarding_screen/weight_screen.dart';
 
 class GenderScreen extends StatefulWidget {
-  const GenderScreen({super.key});
   static String id = "GenderPage";
-
   @override
-  State<GenderScreen> createState() => _GenderScreenState();
+  _GenderScreenState createState() => _GenderScreenState();
 }
-
 class _GenderScreenState extends State<GenderScreen> {
-  int? selectedIndex;
+  String? selectedGender;
 
+  void _selectGender(String gender) {
+    setState(() {
+      selectedGender = gender;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      backgroundColor: AppColor.backgroundColorScaffoldBoarding,
+      body: Stack(
         children: [
+          Positioned.fill(
+            child: Opacity(
+              opacity: 0.8,
+              child: Image.asset(
+                'assets/images/genderphoto.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              color: AppColor.overlayBackgroundBlack,
+            ),
+          ),
           Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 120.0, horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 40),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "How do you identify?",
-                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                const Spacer(),
+             const   Text(
+                  "Your gender",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 10),
+            const    Text(
+                  "To estimate your body’s",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 18,
+                  ),
                 ),
                 const Text(
-                  "To give you a better experience we need to know your gender.s",
-                  style: TextStyle(color: Colors.grey, fontSize: 25),
+                  "metabolic rate.",
+                  style: TextStyle(
+                    color: Colors.greenAccent,
+                    fontSize: 18,
+                  ),
                 ),
-                CustomGender(
-                  text: "Male",
-                  icon: Icons.male,
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = 0;
-                    });
-                  },
-                  isSelected: selectedIndex == 0,
+                const SizedBox(height: 30),
+                GenderSelected(
+                  gender: "Male",
+                  isSelected: selectedGender == "Male",
+                  onTap: () => _selectGender("Male"),
                 ),
-                CustomGender(
-                  text: "Female",
-                  icon: Icons.female,
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = 1;
-                    });
-                  },
-                  isSelected: selectedIndex == 1,
+                const SizedBox(height: 15),
+                GenderSelected(
+                  gender: "Female",
+                  isSelected: selectedGender == "Female",
+                  onTap: () => _selectGender("Female"),
                 ),
-                CustomGender(
-                  text: "Non-Binary",
-                  icon: Icons.transgender,
-                  onTap: () {
-                    setState(() {
-                      selectedIndex = 2;
-                    });
-                  },
-                  isSelected: selectedIndex == 2,
-                ),
+                const Spacer(),
               ],
             ),
           ),
-          const Spacer(),
-          CustomContainer(
-              onTapPrevious: () {
-                Navigator.of(context).pop();
-              },
-              title: "previous",
-              subtTitle: "Continue",
-              onTapContinue: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => WeightScreen()));
-              })
+          CustomPositionedArrow(onPressed: () {
+            Navigator.pushNamed(context, WeightScreen.id);
+          })
         ],
       ),
     );

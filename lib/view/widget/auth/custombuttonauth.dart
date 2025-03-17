@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_depi/constants/color.dart';
 
 class Custombuttonauth extends StatelessWidget {
   final String text;
@@ -17,10 +18,10 @@ class Custombuttonauth extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(60)),
       ),
-      padding: const EdgeInsets.all(5),
-      color: Colors.black,
+      padding: const EdgeInsets.all(10),
+      color: AppColor.myBlue,
       textColor: Colors.white,
-      child:Text(text,style: const TextStyle(fontSize: 25),),
+      child:Text(text,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
     ),
     );
     

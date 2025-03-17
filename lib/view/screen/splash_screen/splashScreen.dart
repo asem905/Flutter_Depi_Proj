@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter_application_depi/view/screen/auth/login.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/onBoarding_screen.dart';
+
 import 'package:lottie/lottie.dart';
 
 class Splashscreen extends StatefulWidget {
@@ -16,7 +16,7 @@ class _SplashscreenState extends State<Splashscreen> {
   Widget build(BuildContext context) {
     return AnimatedSplashScreen(
       splash: Center(
-        child: Lottie.asset('assets/splash.json',width: 650,height: 650),
+        child: Lottie.asset('assets/splash.json', width: 650, height: 650),
       ),
       nextScreen: const Login(),
       splashTransition: SplashTransition.fadeTransition,
