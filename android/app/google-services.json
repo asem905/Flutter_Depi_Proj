@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:819905247319:android:e3ca26157456e518010b12",
         "android_client_info": {
-          "package_name": "com.example.e_commerce_application"
+          "package_name": "com.example.flutter_application_depi"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "819905247319-ma8bouc9922p3gvop23btmba7pr5a9h8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.e_commerce_application",
+            "package_name": "com.example.flutter_application_depi",
             "certificate_hash": "271a0114903fee67f9b81e5e86d8fe84062c56ce"
           }
         },

@@ -1,29 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart';
 
-class Custombuttonauth extends StatelessWidget {
+
+class CustomButtonAuth extends StatelessWidget {
   final String text;
   final void Function()? onPressed;
-  const Custombuttonauth({super.key, required this.text, this.onPressed});
+  final Color? backgroundColor;
+  final Gradient? gradient;
+
+  const CustomButtonAuth({
+    super.key,
+    required this.text,
+    required this.onPressed,
+    this.backgroundColor,
+    this.gradient,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 30),
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(30)),
+      decoration: BoxDecoration(
+        gradient: gradient,
+        borderRadius: BorderRadius.circular(8),
       ),
-      child: MaterialButton(onPressed: onPressed,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(60)),
+      width: double.infinity,
+      height: 50,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: backgroundColor ?? Colors.transparent,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        child: Text(
+          text,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+        ),
       ),
-      padding: const EdgeInsets.all(10),
-      color: AppColor.myBlue,
-      textColor: Colors.white,
-      child:Text(text,style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-    ),
     );
-    
   }
 }

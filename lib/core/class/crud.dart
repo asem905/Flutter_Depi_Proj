@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class Crud{
   Future<Either<Statusrequest,Map>> postdata(linkurl,data)async{
     try{
-      if(await CheckInternet()){
+      if(await checkInternet()){
         var response=await http.post(Uri.parse(linkurl),body: data);
         if(response.statusCode==200 || response.statusCode==201){
           Map responsebody=jsonDecode(response.body);

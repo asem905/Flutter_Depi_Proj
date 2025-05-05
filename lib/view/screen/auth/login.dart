@@ -1,53 +1,62 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter_application_depi/constants/Routes/route.dart';
+import 'package:flutter_application_depi/constants/color.dart';
 import 'package:flutter_application_depi/core/class/auth_service.dart';
-
-import 'package:flutter_application_depi/view/screen/auth/signup.dart';
+import 'package:flutter_application_depi/core/services/services.dart';
 import 'package:flutter_application_depi/view/screen/auth/forgetpassword/resetpassword.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/onboarding_screen.dart';
+import 'package:flutter_application_depi/core/functions/validinput.dart';
+import 'package:flutter_application_depi/view/screen/auth/signup.dart';
+import 'package:flutter_application_depi/view/screen/membership.dart';
 import 'package:flutter_application_depi/view/widget/auth/custombuttonauth.dart';
 import 'package:flutter_application_depi/view/widget/auth/customloginlinks.dart';
 import 'package:flutter_application_depi/view/widget/auth/customtextformauth.dart';
-import 'package:flutter_application_depi/core/functions/validinput.dart';
-
 class Login extends StatefulWidget {
   const Login({super.key});
+  static const String id = "/login";
 
   @override
-  State<Login> createState() => _LoginState();
+  // ignore: library_private_types_in_public_api
+  _Login createState() => _Login();
 }
 
-class _LoginState extends State<Login> {
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final _textFormKey = GlobalKey<FormState>();
+class _Login extends State<Login> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _rememberMe = false;
+  bool _obscurePassword = true;
   bool _isLoading = false;
-
+  final prefs = InitServices.sharedPref;
+  
   final AuthService _authService = AuthService();
 
   @override
   void dispose() {
-    email.dispose();
-    password.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
     super.dispose();
   }
 
   Future<void> _loginWithEmailAndPassword() async {
-    if (_textFormKey.currentState!.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _isLoading = true;
       });
 
       try {
         final user = await _authService.signInWithEmailAndPassword(
-          email.text,
-          password.text,
+          _emailController.text,
+          _passwordController.text,
         );
 
         if (user != null && !user.emailVerified) {
           await _authService.sendEmailVerification();
           AwesomeDialog(
+            // ignore: use_build_context_synchronously
             context: context,
             animType: AnimType.scale,
             dialogType: DialogType.info,
@@ -55,7 +64,12 @@ class _LoginState extends State<Login> {
             desc: "Verification code sent to your email",
           ).show();
         } else {
-          Navigator.pushNamedAndRemoveUntil(context, OnboardingScreen.id, (route) => false);
+          if(prefs.getString("member") != "1"){
+            prefs.setString("member","1");
+            Navigator.pushNamedAndRemoveUntil(context, Routes.onboarnding, (route) => false);
+          }else{
+            Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+          }
         }
       } on FirebaseAuthException catch (e) {
         AwesomeDialog(
@@ -81,7 +95,12 @@ class _LoginState extends State<Login> {
     try {
       final user = await _authService.signInWithGoogle();
       if (user != null) {
-        Navigator.pushReplacementNamed(context, "Homepage");
+        if(prefs.getString("member") == "1"){
+          Navigator.pushNamedAndRemoveUntil(context, Routes.onboarnding, (route) => false);
+        }else{
+          prefs.setString("member","1");
+          Navigator.pushReplacementNamed(context,MembershipScreen.id);
+        }
       }
     } catch (e) {
       AwesomeDialog(
@@ -101,108 +120,184 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
-        children: [
-          const SizedBox(height: 40),
-          const Center(
-            child: Text(
-              "Hey There,",
-              style: TextStyle(fontSize: 20, color: Colors.black54),
-            ),
-          ),
-          const Center(
-            child: Text(
-              "Welcome Back",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-            ),
-          ),
-          const SizedBox(height: 40),
-          Form(
-            key: _textFormKey,
-            child: Column(
-              children: [
-                Customtextformauth(
-                  hinttext: "abc1123@gmail.com",
-                  icondata: Icons.email,
-                  isNumber: false,
-                  mycontroller: email,
-                  validator: (val) => Validinput("email", email.text),
-                  LabelText: 'Email',
+      backgroundColor: AppColor.authBackgroundColor,
+      body: SafeArea(
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
+              const SizedBox(height: 40),
+              const Center(
+                child: Text(
+                  "Fitlytic",
+                  style: TextStyle(fontSize: 20, color: Colors.white70),
                 ),
-                Customtextformauth(
-                  hinttext: "Enter Your Password",
-                  icondata: Icons.lock,
-                  isNumber: false,
-                  obscureText: true,
-                  mycontroller: password,
-                  validator: (val) => Validinput("password", password.text),
-                  LabelText: 'Password',
-                ),
-                const SizedBox(height: 200),
-                MaterialButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => ResetPassword()),
-                    );
-                  },
-                  child: const Text(
-                    "Forget Your Password?",
-                    style: TextStyle(fontSize: 20, color: Colors.grey),
+              ),
+              const Center(
+                child: Text(
+                  "Welcome Back! Ready to Crush Your Fitness Goals?",textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 20),
-                SizedBox(
-                  width: double.infinity,
-                  child: Custombuttonauth(
-                  onPressed: _isLoading ? null : _loginWithEmailAndPassword,
-                  text: "Login",
+              ),
+              const SizedBox(height: 40),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: Column(
+                  children: [
+                    CustomTextFormAuth(
+                      hinttext: "abc1123@gmail.com",
+                      icondata: Icons.email,
+                      isNumber: false,
+                      mycontroller: _emailController,
+                      validator: (val) => Validinput("email", _emailController.text),
+                      labelText: 'Email',
+                      backgroundColor: AppColor.textFormBackgroundColor,
+                      textColor: Colors.white,
+                      hintColor: Colors.white38,
+                    ),
+                    const SizedBox(height: 20),
+                    CustomTextFormAuth(
+                      hinttext: "Enter Your Password",
+                      icondata: Icons.lock,
+                      isNumber: false,
+                      obscureText: _obscurePassword,
+                      mycontroller: _passwordController,
+                      validator: (val) => Validinput("password", _passwordController.text),
+                      labelText: 'Password',
+                      backgroundColor: AppColor.textFormBackgroundColor,
+                      textColor: Colors.white,
+                      hintColor: Colors.white38,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _obscurePassword
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Colors.white54,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            SizedBox(
+                              height: 24,
+                              width: 24,
+                              child: Checkbox(
+                                value: _rememberMe,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _rememberMe = value ?? false;
+                                    prefs.setString("remember", "1");
+                                    
+                                  });
+                                },
+                                fillColor: WidgetStateProperty.resolveWith(
+                                  (states) {
+                                    if (states.contains(WidgetState.selected)) {
+                                      return const Color(0xFF3B82F6);
+                                    }
+                                    return Colors.transparent;
+                                  },
+                                ),
+                                side: const BorderSide(color: Colors.white54),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            const Text(
+                              'Remember me',
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ResetPassword()),
+                            );
+                          },
+                          child: const Text(
+                            'Forgot password?',
+                            style: TextStyle(
+                              color: Color(0xFF3B82F6),
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    CustomButtonAuth(
+                      onPressed: _isLoading ? null : _loginWithEmailAndPassword,
+                      text: "Login",
+                      backgroundColor: Colors.transparent,
+                      gradient: AppColor.customGradient,
+                    ),
+                    const SizedBox(height: 20),
+                    const Center(
+                      child: Text(
+                        "Or Login With",
+                        style: TextStyle(fontSize: 20, color: Colors.white70),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        
+                        CustomLoginLinks(
+                          onTap: _isLoading ? null : _loginWithGoogle,
+                          img: "assets/images/google_icon.png",
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Don't have account?",
+                          style: TextStyle(fontSize: 20, color: Colors.white70),
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushNamed(Signup.id);
+                          },
+                          child: const Text(
+                            "Sign up",
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Color(0xFF3B82F6),
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                )
-              ],
-            ),
-          ),
-          const SizedBox(height: 20),
-          const Center(
-            child: Text(
-              "Or Login With",
-              style: TextStyle(fontSize: 20, color: Colors.grey),
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              
-              const Customloginlinks(img: "assets/facebook.png"),
-              const SizedBox(width: 40),
-              Customloginlinks(onTap: _isLoading ? null : _loginWithGoogle,img: "assets/google.png"),
-              
+              ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                "Don't have account?",
-                style: TextStyle(fontSize: 20, color: Colors.grey),
-              ),
-              MaterialButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Signup()),
-                  );
-                },
-                child: const Text(
-                  "Sign up",
-                  style: TextStyle(fontSize: 20, color: Colors.blue),
-                ),
-              ),
-            ],
-          ),
-        ],
+        ),
       ),
     );
   }
 }
+
+

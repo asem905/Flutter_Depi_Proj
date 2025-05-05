@@ -1,35 +1,20 @@
-import 'dart:io';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/age_screen.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/gender_screen.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/hieght_screen.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/onboarding_screen.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/page_view_boarding.dart';
-import 'package:flutter_application_depi/view/screen/onBoarding_screen/weight_screen.dart';
-import 'package:flutter_application_depi/view/screen/splash_screen/splashScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_depi/constants/Routes/route.dart';
+import 'package:flutter_application_depi/core/services/get_exercieses-servciese.dart';
+import 'package:flutter_application_depi/core/services/services.dart';
+import 'package:flutter_application_depi/cubit/exercise_cubit.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  print("=====Back Ground Message============");
-
-  print("${message.notification!.title}");
-  print("${message.notification!.body}");
-}
+import 'package:flutter_application_depi/constants/Routes/route_manger.dart';
+import 'package:flutter_application_depi/cubit/search_cubit/cubit/search_result_cubit.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Platform.isAndroid
-      ? await Firebase.initializeApp(
-          options: const FirebaseOptions(
-          apiKey: "AIzaSyBMy968UAI1YI71Mg2vHQikFqNEDra4_o8",
-          appId: "1:819905247319:android:e3ca26157456e518010b12",
-          messagingSenderId: "819905247319",
-          projectId: "fluttercourse-5af65",
-        ))
-      : await Firebase.initializeApp();
-  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  InitServices initservices = InitServices();
+  
+  await InitServices.initialize();
+  //InitServices.sharedPref.clear();
   runApp(const MainApp());
 }
 
@@ -54,20 +39,35 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        OnboardingScreen.id:(context)=>const OnboardingScreen(),
-        GenderScreen.id:(context)=>GenderScreen(),
-        PageViewBoarding.id:(context)=>PageViewBoarding(),
-        WeightScreen.id:(context)=>const WeightScreen(),
-        HeightWheelPicker.id:(context)=>HeightWheelPicker(),
-        AgeScreen.id:(context)=>const AgeScreen(),
-        "splash":(context)=>const Splashscreen()
-        },
-      initialRoute: "splash",
-      
-      
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => ExerciseCubit(),
+        ),
+        BlocProvider(
+          create: (context) => SearchResultCubit(SearchServices()),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          brightness: Brightness.dark,
+          primaryColor: const Color(0xFF1F2937),
+          scaffoldBackgroundColor: const Color(0xFF111827),
+          colorScheme: const ColorScheme.dark(
+            primary: Color(0xFF3B82F6),
+            secondary: Color(0xFF3B82F6),
+          ),
+          textTheme: const TextTheme(
+            titleLarge: TextStyle(
+                fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+            bodyLarge: TextStyle(fontSize: 16, color: Colors.white),
+            bodyMedium: TextStyle(fontSize: 14, color: Colors.white),
+          ),
+        ),
+        onGenerateRoute: RouteManeger.getRoutes,
+        initialRoute: InitServices.sharedPref.getString("splash") == "1" ?  (InitServices.sharedPref.getString("remember") == "1" ? (InitServices.sharedPref.getString("member") == "1" ? Routes.home: Routes.onboarnding) : Routes.login) : Routes.splashscreen, 
+      ),
     );
   }
 }

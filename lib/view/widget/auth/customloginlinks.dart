@@ -1,31 +1,34 @@
 import 'package:flutter/material.dart';
 
-class Customloginlinks extends StatelessWidget {
+class CustomLoginLinks extends StatelessWidget {
   final String img;
   final void Function()? onTap;
-  const Customloginlinks({super.key, required this.img, this.onTap});
+
+  const CustomLoginLinks({
+    super.key,
+    required this.img,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-        onTap: () {},
-        child: Container(
-        height: 50,
-        width: 50,
-        padding: const EdgeInsets.all(10),
+      onTap: onTap,
+      child: Container(
+        height: 44,
+        width: 44,
         decoration: BoxDecoration(
-          color: Colors.grey[180],
+          border: Border.all(color: Colors.white24),
+          borderRadius: BorderRadius.circular(8),
         ),
-        child: Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(img),
-              fit: BoxFit.cover,
-            ),
+        child: Center(
+          child: Image.asset(
+            img,
+            height: 24,
+            width: 24,
           ),
         ),
-      ),);
+      ),
+    );
   }
 }

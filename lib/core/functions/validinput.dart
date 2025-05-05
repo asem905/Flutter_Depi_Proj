@@ -1,4 +1,15 @@
+// ignore: non_constant_identifier_names
 Validinput(String type, String value) {
+  if (type == "date") {
+    if (value.isEmpty || value.length < 3) {
+      return "Please enter your date of birth";
+    } 
+  }
+  if (type == "name") {
+    if (value.isEmpty) {
+      return "Please enter a valid username";
+    } 
+  }
   if (type == "email") {
     if (value.isEmpty || !value.contains("@")) {
       return "Please enter a valid email";
@@ -14,9 +25,5 @@ Validinput(String type, String value) {
       return "Please enter a valid password";
     } 
   } 
-  if (type == "username") {
-    if (value.isEmpty) {
-      return "Please enter a valid username";
-    } 
-  }
+  
 }

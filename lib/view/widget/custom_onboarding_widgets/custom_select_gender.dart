@@ -8,11 +8,11 @@ class GenderSelected extends StatelessWidget {
   final VoidCallback onTap;
 
   const GenderSelected({
-    Key? key,
+    super.key,
     required this.gender,
     required this.isSelected,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
