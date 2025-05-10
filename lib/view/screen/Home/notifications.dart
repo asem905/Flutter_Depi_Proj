@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
-import 'package:flutter_application_depi/constants/notifications_list.dart';
+import 'package:flutter_application_depi/utils/constants/custom_colors.dart';
+import 'package:flutter_application_depi/utils/constants/notifications_list.dart';
 import 'package:flutter_application_depi/view/widget/custom_app_bar.dart';
 class Notifications extends StatefulWidget {
   const Notifications({super.key});

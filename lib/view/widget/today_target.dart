@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
+import 'package:flutter_application_depi/utils/constants/custom_colors.dart';
 
 
 

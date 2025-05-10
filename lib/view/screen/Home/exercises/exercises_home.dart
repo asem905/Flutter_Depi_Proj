@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
-import 'package:flutter_application_depi/constants/exercises/exercises_home_constant.dart';
-import 'package:flutter_application_depi/cubit/exercise_cubit.dart';
+import 'package:flutter_application_depi/controller/exercise_cubit.dart';
+import 'package:flutter_application_depi/utils/constants/custom_colors.dart';
+import 'package:flutter_application_depi/utils/constants/exercises/exercises_home_constant.dart';
 import 'package:flutter_application_depi/view/screen/Home/exercises/exercises_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

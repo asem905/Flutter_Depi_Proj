@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/cubit/exercise_cubit.dart';
-import 'package:flutter_application_depi/cubit/exercise_state.dart';
-import 'package:flutter_application_depi/data/model/exercise_model.dart';
+import 'package:flutter_application_depi/controller/exercise_cubit.dart';
+import 'package:flutter_application_depi/controller/exercise_state.dart';
+import 'package:flutter_application_depi/model/exercise_model.dart';
 import 'package:flutter_application_depi/view/screen/search/search_view.dart';
 import 'dart:ui';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 class ExerciseCategoryScreen extends StatefulWidget {
   final String categoryTitle;
 
@@ -66,7 +67,7 @@ class _ExerciseCategoryScreenState extends State<ExerciseCategoryScreen> {
     } else if (widget.categoryTitle == 'Core') {
       firstCatName = "waist";
       secondCatName = null;
-    }else if (widget.categoryTitle == 'Cardio') {
+    } else if (widget.categoryTitle == 'Cardio') {
       firstCatName = "cardio";
       secondCatName = null;
     } else {
@@ -74,6 +75,7 @@ class _ExerciseCategoryScreenState extends State<ExerciseCategoryScreen> {
       secondCatName = null;
     }
   }
+
   @override
   void initState() {
     super.didChangeDependencies();
@@ -84,7 +86,7 @@ class _ExerciseCategoryScreenState extends State<ExerciseCategoryScreen> {
     // print("$firstCatName $secondCatName ====================================");
     context.read<ExerciseCubit>().filterByTargetMuscle(firstCatName,
         secondTargetedMuscle: secondCatName);
-    
+
     selectedCategory = widget.categoryTitle;
   }
 
@@ -101,31 +103,42 @@ class _ExerciseCategoryScreenState extends State<ExerciseCategoryScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        leading: IconButton(onPressed: (){
-          Navigator.pop(context);
-        }, icon:const Icon(Icons.arrow_back)),
+        leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.arrow_back)),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: Text(
-              "${exercises.length} exercises available for ${selectedCategory.toLowerCase()} muscle group",
-              style: const TextStyle(
-                color: Colors.grey,
-                fontSize: 16,
-              ),
-            ),
-          ),
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: BlocBuilder<ExerciseCubit, ExerciseState>(
+                builder: (context, state) {
+                  if (state is ExerciseLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (state is ExerciseLoaded) {
+                    return Text(
+                      "there are ${state.exercises.length} Exercises available for this category",
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              )),
           // Search bar
- 
-    Padding(
-  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-  child: SearchView(),
-),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: SearchView(),
+          ),
 
           // Filter options in a row
           Padding(
@@ -274,108 +287,98 @@ class ExerciseCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
+          Expanded(
+            flex: 1,
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(12),
+                topRight: Radius.circular(12),
+              ),
+              child: Image.asset(
+                'assets/profile/gym.jpg',
+              ),
             ),
-            child: Image.network(
-            'https://example.com/your-gif.gif',
-            loadingBuilder: (context, child, progress) {
-              if (progress == null) return child;
-              return const CircularProgressIndicator();
-            },
-            errorBuilder: (context, error, stackTrace) {
-              return const Text('Error loading GIF');
-            },
-          ),
           ),
           Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    exercise.name!, // You'll replace with dynamic title
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  const Spacer(),
-                  // Tags are rendered here - you'll populate dynamically
-                  Wrap(
-                    spacing: 8,
-                    runSpacing: 8,
+            flex: 2,
+            child: Column(
+              children:[ Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Sample tag - you'll populate from your API
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: Colors.purple,
-                          borderRadius: BorderRadius.circular(16),
+                      Text(
+                        exercise.name!, // You'll replace with dynamic title
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
                         ),
-                        child: Text(
-                          "Target muscle is ${exercise.bodyParts![0]}",textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
+                      ),
+                      const Spacer(),
+                      // Tags are rendered here - you'll populate dynamically
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: [
+                          // Sample tag - you'll populate from your API
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: Colors.purple,
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            child: Text(
+                              "Target muscle is ${exercise.bodyParts![0]}",
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: ElevatedButton.icon(
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                snackBarAnimationStyle: AnimationStyle(
+                                    curve: Curves.easeIn,
+                                    reverseCurve: Curves.easeOut),
+                                SnackBar(
+                                    // backgroundColor: AppColor.primaryPurple,
+                                    content: ListView.builder(
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        shrinkWrap: true,
+                                        itemCount: exercise.instructions!.length,
+                                        itemBuilder: (context, index) {
+                                          return Text(
+                                              "${exercise.instructions![index]}");
+                                        })));
+                          },
+                          label: const Text("View Instructions",style: TextStyle(fontSize: 12),),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent,
+                            foregroundColor: Colors.cyan,
+                            elevation: 1,
+                            maximumSize: const Size(double.infinity, 10),
+                            side: const BorderSide(color: Colors.cyan),
+                            padding: const EdgeInsets.symmetric(vertical: 4),
+                            minimumSize: const Size(double.infinity, 10),
                           ),
                         ),
                       ),
                     ],
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        snackBarAnimationStyle: AnimationStyle(
-                          curve: Curves.easeIn,
-                          reverseCurve: Curves.easeOut
-                        ),
-                        
-                        SnackBar(
-                          // backgroundColor: AppColor.primaryPurple,
-                          content:ListView.builder(
-                            physics:NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: exercise.instructions!.length,
-                            itemBuilder: (context,index){
-                            return Text("${exercise.instructions![index]}");
-                          })
-                        )
-                      );
-                    },
-                    label: const Text("View Instructions"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.cyan,
-                      elevation: 0,
-                      side: const BorderSide(color: Colors.cyan),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      minimumSize: const Size(double.infinity, 36),
-                    ),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // You'll add your video navigation logic here
-                    },
-                    icon: const Icon(Icons.video_camera_front, size: 18),
-                    label: const Text("View Video"),
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.transparent,
-                      foregroundColor: Colors.pinkAccent,
-                      elevation: 0,
-                      side: const BorderSide(color: Colors.pinkAccent),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      minimumSize: const Size(double.infinity, 36),
-                    ),
-                  ),
-                ],
+                ),
               ),
+              ]
             ),
           ),
         ],

@@ -1,7 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
-import 'package:flutter_application_depi/constants/custom_styles.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/custom_styles.dart';
 
 // Workout History Page (Image 1)
 class WorkoutHistoryPage extends StatelessWidget {
@@ -20,7 +19,7 @@ class WorkoutHistoryPage extends StatelessWidget {
         backgroundColor: const Color(0xFF1F2937),
         elevation: 0,
         leading: IconButton(
-          hoverColor: MyColors.grey2,
+          hoverColor: AppColor.grey2,
           iconSize: 24.0,
           onPressed: () {
             Navigator.of(context).pop();
@@ -52,7 +51,7 @@ class WorkoutHistoryPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.all(16.0),
         children: [
-          _buildWorkoutCard(
+          buildWorkoutCard(
             icon: Icons.fitness_center,
             title: 'Upper Body Workout',
             subtitle: 'Completed 45 minutes • 320 calories',
@@ -60,7 +59,7 @@ class WorkoutHistoryPage extends StatelessWidget {
             timeAgo: '2 hours ago',
           ),
           Divider(height: 20, color: Colors.grey[800]),
-          _buildWorkoutCard(
+          buildWorkoutCard(
             icon: Icons.directions_run,
             title: 'Morning Run',
             subtitle: '5.2 km • 32 minutes',
@@ -68,7 +67,7 @@ class WorkoutHistoryPage extends StatelessWidget {
             timeAgo: 'Yesterday',
           ),
           Divider(height: 20, color: Colors.grey[800]),
-          _buildWorkoutCard(
+          buildWorkoutCard(
             icon: Icons.local_fire_department,
             title: 'HIIT Session',
             subtitle: 'Completed 30 minutes • 450 calories',
@@ -76,7 +75,7 @@ class WorkoutHistoryPage extends StatelessWidget {
             timeAgo: '2 days ago',
           ),
           Divider(height: 20, color: Colors.grey[800]),
-          _buildWorkoutCard(
+          buildWorkoutCard(
             icon: Icons.self_improvement,
             title: 'Yoga Session',
             subtitle: 'Completed 60 minutes • 180 calories',
@@ -88,7 +87,7 @@ class WorkoutHistoryPage extends StatelessWidget {
     );
   }
 
-  Widget _buildWorkoutCard({
+  Widget buildWorkoutCard({
     required IconData icon,
     required String title,
     required String subtitle,

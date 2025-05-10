@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart'; 
+import 'package:flutter_application_depi/utils/constants/color.dart';
+
+double selectedWeight = 0;
 
 class CustomWeightSlider extends StatefulWidget {
   const CustomWeightSlider({super.key});
@@ -9,8 +11,6 @@ class CustomWeightSlider extends StatefulWidget {
 }
 
 class _CustomWeightSliderState extends State<CustomWeightSlider> {
-  double _current_Value = 0;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -24,7 +24,7 @@ class _CustomWeightSliderState extends State<CustomWeightSlider> {
               style: TextStyle(
                 fontSize: 35,
                 fontWeight: FontWeight.bold,
-                color: AppColor.white, 
+                color: AppColor.white,
               ),
             ),
           ),
@@ -39,8 +39,8 @@ class _CustomWeightSliderState extends State<CustomWeightSlider> {
             decoration: BoxDecoration(
               gradient: const LinearGradient(
                 colors: [
-                  AppColor.gradientStart, 
-                  AppColor.gradientEnd,   
+                  AppColor.gradientStart,
+                  AppColor.gradientEnd,
                 ],
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -52,18 +52,18 @@ class _CustomWeightSliderState extends State<CustomWeightSlider> {
                 const SizedBox(height: 10),
                 const SizedBox(height: 10),
                 Text(
-                  '${_current_Value.toStringAsFixed(1)} kg',
+                  '${selectedWeight.toStringAsFixed(1)} kg',
                   style: const TextStyle(fontSize: 20, color: AppColor.white70),
                 ),
                 Slider(
-                  thumbColor: AppColor.thumbColor, 
-                  activeColor: AppColor.activeSliderColor, 
+                  thumbColor: AppColor.thumbColor,
+                  activeColor: AppColor.activeSliderColor,
                   max: 200,
                   min: 0,
-                  value: _current_Value,
+                  value: selectedWeight,
                   onChanged: (val) {
                     setState(() {
-                      _current_Value = val;
+                      selectedWeight = val;
                     });
                   },
                 ),

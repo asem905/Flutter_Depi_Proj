@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/cubit/search_cubit/cubit/search_result_cubit.dart';
+import 'package:flutter_application_depi/controller/search_cubit/cubit/search_result_cubit.dart';
 import 'package:flutter_application_depi/view/screen/Home/exercises/exercises_details.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
 
 class CustomTextBodyAuth extends StatelessWidget {
   final String text;

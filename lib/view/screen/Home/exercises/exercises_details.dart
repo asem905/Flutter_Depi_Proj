@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/data/model/exercise_model.dart';
+import 'package:flutter_application_depi/model/exercise_model.dart';
 import 'package:flutter_application_depi/view/screen/search/search_helper.dart/exercise_details_helper.dart';
 
 class ExerciseDetailsScreen extends StatelessWidget {

@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
+import 'package:flutter_application_depi/core/services/services.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
+import 'package:flutter_application_depi/view/screen/Achievement/achievements_screen.dart';
 import 'package:flutter_application_depi/view/screen/Home/workout_completion_screen.dart';
-import 'package:flutter_application_depi/view/screen/Profile/achievement_profile.dart';
 import 'package:flutter_application_depi/view/screen/Profile/personal_info.dart';
 import 'package:flutter_application_depi/view/screen/Profile/privacy_policy_page.dart';
 import 'package:flutter_application_depi/view/screen/Profile/settings_page.dart';
@@ -23,6 +25,12 @@ class _ProfileUiState extends State<ProfileUi> {
   final Color textColor = Colors.white;
   final Color subtitleColor = Colors.grey.shade400;
   final Color cardBackground = const Color(0xFF242838);
+  var prefs=InitServices.sharedPref;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,9 +63,9 @@ class _ProfileUiState extends State<ProfileUi> {
             const SizedBox(height: 10),
             ShaderMask(
               shaderCallback: (bounds) =>
-                  MyColors.customGradient.createShader(bounds),
+                  AppColor.customGradient.createShader(bounds),
               child: Text(
-                "Amir Hamdi",
+                prefs.getString("Name")!,
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -70,51 +78,26 @@ class _ProfileUiState extends State<ProfileUi> {
               style: TextStyle(color: subtitleColor),
             ),
             const SizedBox(height: 10),
-            Container(
-              decoration: BoxDecoration(
-                gradient: MyColors.customGradient,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(
-                      builder: (context) => const WorkoutCompletionScreen(),
-                    ),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  shadowColor: Colors.transparent,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                  child: Text('Edit', style: TextStyle(color: Colors.white)),
-                ),
-              ),
-            ),
+           
             const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ProfileInfoCard(
                   label: 'Height', 
-                  value: '180cm',
+                  value: prefs.getInt("height"),
                   textColor: textColor,
                   subtitleColor: subtitleColor,
                 ),
                 ProfileInfoCard(
-                  label: 'Weight', 
-                  value: '65kg',
+                  label: 'Weight',
+                  value:  prefs.getDouble("weight"),
                   textColor: textColor,
                   subtitleColor: subtitleColor,
                 ),
                 ProfileInfoCard(
                   label: 'Age', 
-                  value: '22yo',
+                  value: prefs.getInt("age"),
                   textColor: textColor,
                   subtitleColor: subtitleColor,
                 ),
@@ -125,14 +108,14 @@ class _ProfileUiState extends State<ProfileUi> {
               {'title': 'Personal Data', 'icon': Icons.person, 'ontap': () {
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const PersonalInfo(),
+                      builder: (context) => PersonalInfo(),
                     ),
                   );
               }},
               {'title': 'Achievement', 'icon': Icons.emoji_events, 'ontap': () {
                 Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (context) => const AchievementsPage(),
+                      builder: (context) => const AchievementsScreen(),
                     ),
                   );
               }},
@@ -200,7 +183,7 @@ class _ProfileUiState extends State<ProfileUi> {
       children: [
         ShaderMask(
           shaderCallback: (bounds) =>
-              MyColors.customGradient.createShader(bounds),
+              AppColor.customGradient.createShader(bounds),
           child: Text(
             title,
             style: TextStyle(
@@ -221,7 +204,7 @@ class _ProfileUiState extends State<ProfileUi> {
             onTap: item['ontap'],
             leading: ShaderMask(
               shaderCallback: (bounds) =>
-                  MyColors.customGradient.createShader(bounds),
+                  AppColor.customGradient.createShader(bounds),
               child: Icon(item['icon'], color: Colors.white),
             ),
             title: Text(
@@ -245,7 +228,7 @@ class _ProfileUiState extends State<ProfileUi> {
       children: [
         ShaderMask(
           shaderCallback: (bounds) =>
-              MyColors.customGradient.createShader(bounds),
+              AppColor.customGradient.createShader(bounds),
           child: Text(
             'Notification',
             style: TextStyle(
@@ -264,7 +247,7 @@ class _ProfileUiState extends State<ProfileUi> {
           child: ListTile(
             leading: ShaderMask(
               shaderCallback: (bounds) =>
-                  MyColors.customGradient.createShader(bounds),
+                  AppColor.customGradient.createShader(bounds),
               child: const Icon(Icons.notifications, color: Colors.white),
             ),
             title: Text(
@@ -290,11 +273,11 @@ class _ProfileUiState extends State<ProfileUi> {
 
 class ProfileInfoCard extends StatelessWidget {
   final String label;
-  final String value;
+  var value;
   final Color textColor;
   final Color subtitleColor;
 
-  const ProfileInfoCard({
+  ProfileInfoCard({
     super.key, 
     required this.label, 
     required this.value,
@@ -317,7 +300,7 @@ class ProfileInfoCard extends StatelessWidget {
               colors: [Colors.blue, Colors.purple],
             ).createShader(bounds),
             child: Text(
-              value,
+              value.toString(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,

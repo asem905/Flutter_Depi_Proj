@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
+import 'package:flutter_application_depi/utils/constants/custom_colors.dart';
 import 'package:flutter_application_depi/core/services/get_exercieses-servciese.dart';
 import 'package:flutter_application_depi/view/screen/Notifications/notifications.dart';
 import 'package:flutter_application_depi/view/screen/search/search_view.dart';
@@ -190,13 +190,14 @@ class _SearchScreen extends State<SearchScreen> {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      
                       children: [
                         Text(
                           title,
                           style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
-                            fontSize: 16,
+                            fontSize: 15,
                           ),
                         ),
                         Container(
@@ -210,7 +211,7 @@ class _SearchScreen extends State<SearchScreen> {
                             difficulty,
                             style: const TextStyle(
                               color: Colors.white,
-                              fontSize: 12,
+                              fontSize: 11,
                               fontWeight: FontWeight.bold,
                             ),
                           ),

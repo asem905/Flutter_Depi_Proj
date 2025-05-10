@@ -1,8 +1,7 @@
 // Support Page (Image 4)
-
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
-import 'package:flutter_application_depi/constants/custom_styles.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/custom_styles.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({super.key});
@@ -36,7 +35,7 @@ class _SupportPageState extends State<SupportPage> {
           style: customTitleStyle(24),
         ),
         leading: IconButton(
-              hoverColor: MyColors.grey2,
+              hoverColor: AppColor.grey2,
 
               iconSize: 24.0,
               onPressed: () {
@@ -207,7 +206,7 @@ class _SupportPageState extends State<SupportPage> {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(60.0),
-                          gradient: MyColors.customGradient),
+                          gradient: AppColor.customGradient),
                       clipBehavior: Clip.antiAlias,
                       width: double.infinity,
                       child: ElevatedButton.icon(

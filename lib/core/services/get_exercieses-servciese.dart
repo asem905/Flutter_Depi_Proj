@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_application_depi/data/model/exercise_model.dart';
+import 'package:flutter_application_depi/model/exercise_model.dart';
 import 'package:http/http.dart' as http;
 
 class SearchServices {

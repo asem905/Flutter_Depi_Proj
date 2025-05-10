@@ -3,8 +3,9 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
 import 'package:flutter_application_depi/core/functions/validinput.dart';
+import 'package:flutter_application_depi/view/screen/auth/login.dart';
 import 'package:flutter_application_depi/view/widget/auth/custombuttonauth.dart';
 import 'package:flutter_application_depi/view/widget/auth/customtextformauth.dart';
 
@@ -118,7 +119,7 @@ class ResetPassword extends StatelessWidget {
                     width: 400,
                     child: CustomButtonAuth(
                       onPressed: () {
-                        Navigator.of(context).pushNamed("login");
+                        Navigator.of(context).pushNamed(Login.id);
                         // Navigate to the login screen
                       },
                       text: 'Back To Login',

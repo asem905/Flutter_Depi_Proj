@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
 import 'package:flutter_application_depi/view/widget/custom_onboarding_widgets/custom_wheel_chooser.dart';
+
+int selectedHeight = 150;
 
 class CustomHeightColumn extends StatefulWidget {
   const CustomHeightColumn({super.key});
 
   @override
-  State<CustomHeightColumn> createState() =>
-      _CustomHeightColumnState();
+  State<CustomHeightColumn> createState() => _CustomHeightColumnState();
 }
 
 class _CustomHeightColumnState extends State<CustomHeightColumn> {
-  int _selectedHeight = 150;
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -37,18 +36,20 @@ class _CustomHeightColumnState extends State<CustomHeightColumn> {
           CustomWheelChooser(
             maxValue: 220,
             minValue: 100,
-            initValue: _selectedHeight,
+            initValue: selectedHeight,
             onValueChanged: (value) {
               setState(() {
-                _selectedHeight = value;
+                selectedHeight = value;
               });
             },
           ),
           const SizedBox(height: 20),
           Text(
-            "Height: $_selectedHeight cm",
+            "Height: $selectedHeight cm",
             style: const TextStyle(
-                color: AppColor.white, fontSize: 22, fontWeight: FontWeight.bold),
+                color: AppColor.white,
+                fontSize: 22,
+                fontWeight: FontWeight.bold),
           ),
         ],
       ),

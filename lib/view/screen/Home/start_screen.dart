@@ -1,12 +1,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_application_depi/constants/custom_bottom_nav_bar.dart';
 import 'package:flutter_application_depi/view/screen/Achievement/achievements_screen.dart';
 import 'package:flutter_application_depi/view/screen/Activity/activity_tracker.dart';
 import 'package:flutter_application_depi/view/screen/Home/homepage.dart';
 import 'package:flutter_application_depi/view/screen/Profile/profile_ui.dart';
 import 'package:flutter_application_depi/view/screen/search/search_screen.dart';
+import 'package:flutter_application_depi/view/widget/home/custom_bottom_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

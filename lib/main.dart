@@ -1,12 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/Routes/route.dart';
+import 'package:flutter_application_depi/controller/exercise_cubit.dart';
+import 'package:flutter_application_depi/controller/search_cubit/cubit/search_result_cubit.dart';
+import 'package:flutter_application_depi/utils/constants/Routes/route.dart';
 import 'package:flutter_application_depi/core/services/get_exercieses-servciese.dart';
 import 'package:flutter_application_depi/core/services/services.dart';
-import 'package:flutter_application_depi/cubit/exercise_cubit.dart';
-
-import 'package:flutter_application_depi/constants/Routes/route_manger.dart';
-import 'package:flutter_application_depi/cubit/search_cubit/cubit/search_result_cubit.dart';
+import 'package:flutter_application_depi/utils/constants/Routes/route_manger.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
@@ -36,7 +35,6 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
     });
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -66,7 +64,7 @@ class _MainAppState extends State<MainApp> with SingleTickerProviderStateMixin {
           ),
         ),
         onGenerateRoute: RouteManeger.getRoutes,
-        initialRoute: InitServices.sharedPref.getString("splash") == "1" ?  (InitServices.sharedPref.getString("remember") == "1" ? (InitServices.sharedPref.getString("member") == "1" ? Routes.home: Routes.onboarnding) : Routes.login) : Routes.splashscreen, 
+        initialRoute: InitServices.sharedPref.getString("splash") == "1" ?  (InitServices.sharedPref.getString("remember") == "1" ? (InitServices.sharedPref.getString("member") == "1" ? Routes.homeMain: Routes.onboarnding) : Routes.login) : Routes.splashscreen, 
       ),
     );
   }

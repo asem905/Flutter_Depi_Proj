@@ -3,14 +3,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:flutter_application_depi/constants/Routes/route.dart';
-import 'package:flutter_application_depi/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/Routes/route.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
 import 'package:flutter_application_depi/core/class/auth_service.dart';
 import 'package:flutter_application_depi/core/services/services.dart';
+import 'package:flutter_application_depi/view/screen/Home/start_screen.dart';
 import 'package:flutter_application_depi/view/screen/auth/forgetpassword/resetpassword.dart';
 import 'package:flutter_application_depi/core/functions/validinput.dart';
 import 'package:flutter_application_depi/view/screen/auth/signup.dart';
-import 'package:flutter_application_depi/view/screen/membership.dart';
 import 'package:flutter_application_depi/view/widget/auth/custombuttonauth.dart';
 import 'package:flutter_application_depi/view/widget/auth/customloginlinks.dart';
 import 'package:flutter_application_depi/view/widget/auth/customtextformauth.dart';
@@ -56,7 +56,6 @@ class _Login extends State<Login> {
         if (user != null && !user.emailVerified) {
           await _authService.sendEmailVerification();
           AwesomeDialog(
-            // ignore: use_build_context_synchronously
             context: context,
             animType: AnimType.scale,
             dialogType: DialogType.info,
@@ -68,7 +67,7 @@ class _Login extends State<Login> {
             prefs.setString("member","1");
             Navigator.pushNamedAndRemoveUntil(context, Routes.onboarnding, (route) => false);
           }else{
-            Navigator.pushNamedAndRemoveUntil(context, Routes.home, (route) => false);
+            Navigator.pushNamedAndRemoveUntil(context, Routes.homeMain, (route) => false);
           }
         }
       } on FirebaseAuthException catch (e) {
@@ -96,10 +95,12 @@ class _Login extends State<Login> {
       final user = await _authService.signInWithGoogle();
       if (user != null) {
         if(prefs.getString("member") == "1"){
-          Navigator.pushNamedAndRemoveUntil(context, Routes.onboarnding, (route) => false);
+          Navigator.pushReplacement(context,MaterialPageRoute(builder: (context)=>const HomePage()));
+          
         }else{
           prefs.setString("member","1");
-          Navigator.pushReplacementNamed(context,MembershipScreen.id);
+          Navigator.pushNamedAndRemoveUntil(context, Routes.onboarnding, (route) => false);
+          
         }
       }
     } catch (e) {

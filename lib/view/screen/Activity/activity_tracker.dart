@@ -1,7 +1,11 @@
+
 import 'package:flutter/material.dart';
-import 'package:fl_chart/fl_chart.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
-import 'package:flutter_application_depi/constants/custom_styles.dart';
+import 'package:flutter_application_depi/utils/constants/activity_tracker.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
+import 'package:flutter_application_depi/utils/constants/custom_styles.dart';
+import 'package:flutter_application_depi/core/functions/activity_tracker.dart';
+
+
 
 class ActivityTrackerScreen extends StatefulWidget {
   const ActivityTrackerScreen({super.key});
@@ -11,17 +15,11 @@ class ActivityTrackerScreen extends StatefulWidget {
 }
 
 class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
-  String selectedTimeFrame = 'Week';
-  String chartMetric = 'Steps';
-  bool isDropdownOpen = false;
+
 
   @override
   Widget build(BuildContext context) {
-    // Get screen width to calculate responsive sizes
-    final screenWidth = MediaQuery.of(context).size.width;
 
-    // Determine if screen is small (mobile)
-    final isSmallScreen = screenWidth < 600;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF1A1D2A),
@@ -77,53 +75,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                     color: Colors.grey,
                   ),
                 ),
-                
-                // const SizedBox(height: 24),
 
-                // // Metrics Row
-                // SizedBox(
-                //   width: double.maxFinite,
-
-                //   child: Wrap(
-                //     alignment: WrapAlignment.spaceEvenly,
-                //     spacing: 16.0,
-                //     runSpacing: 24.0,
-                //     children: [
-                //       _buildCircularMetric(
-                //         icon: Icons.directions_walk,
-                //         title: 'Steps',
-                //         value: '8432/10000',
-                //         progress: 0.84,
-                //         color: Colors.blue,
-                //         isSmallScreen: isSmallScreen,
-                //       ),
-                //       _buildCircularMetric(
-                //         icon: Icons.local_fire_department,
-                //         title: 'Calories',
-                //         value: '420 kcal',
-                //         progress: 0.42,
-                //         color: Colors.red,
-                //         isSmallScreen: isSmallScreen,
-                //       ),
-                //       _buildCircularMetric(
-                //         icon: Icons.timer,
-                //         title: 'Active Minutes',
-                //         value: '45 min',
-                //         progress: 0.75,
-                //         color: Colors.green,
-                //         isSmallScreen: isSmallScreen,
-                //       ),
-                //       _buildCircularMetric(
-                //         icon: Icons.favorite,
-                //         title: 'Heart Rate',
-                //         value: '72 bpm',
-                //         progress: 0.6,
-                //         color: Colors.pink,
-                //         isSmallScreen: isSmallScreen,
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 const SizedBox(height: 24),
 
                 // Time Frame Selection
@@ -132,13 +84,13 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      _buildTimeFrameButton('Day'),
+                      buildTimeFrameButton('Day'),
                       const SizedBox(width: 8),
-                      _buildTimeFrameButton('Week'),
+                      buildTimeFrameButton('Week'),
                       const SizedBox(width: 8),
-                      _buildTimeFrameButton('Month'),
+                      buildTimeFrameButton('Month'),
                       const SizedBox(width: 8),
-                      _buildTimeFrameButton('Custom'),
+                      buildTimeFrameButton('Custom'),
                     ],
                   ),
                 ),
@@ -211,16 +163,16 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                           ),
                           child: Column(
                             children: [
-                              _buildDropdownItem('Steps'),
-                              _buildDropdownItem('Calories'),
-                              _buildDropdownItem('Minutes'),
+                              buildDropdownItem('Steps'),
+                              buildDropdownItem('Calories'),
+                              buildDropdownItem('Minutes'),
                             ],
                           ),
                         ),
                       const SizedBox(height: 16),
                       SizedBox(
                         height: 180,
-                        child: _buildBarChart(),
+                        child: buildBarChart(),
                       ),
                     ],
                   ),
@@ -256,7 +208,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                         child: SizedBox(
                           height: 180,
                           width: 180,
-                          child: _buildPieChart(),
+                          child: buildPieChart(),
                         ),
                       ),
                       const SizedBox(height: 16),
@@ -265,11 +217,11 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            _buildLegendItem('Cardio', Colors.blue),
+                            buildLegendItem('Cardio', Colors.blue),
                             const SizedBox(width: 16),
-                            _buildLegendItem('Strength', Colors.green),
+                            buildLegendItem('Strength', Colors.green),
                             const SizedBox(width: 16),
-                            _buildLegendItem('Yoga', Colors.red),
+                            buildLegendItem('Yoga', Colors.red),
                           ],
                         ),
                       ),
@@ -288,7 +240,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                   ),
                 ),
                 const SizedBox(height: 16),
-                _buildWorkoutCard(
+                buildWorkoutCard(
                   title: 'Morning HIIT',
                   instructor: 'with Sarah Johnson',
                   calories: '320 kcal',
@@ -296,7 +248,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                   rating: 5.0,
                 ),
                 const SizedBox(height: 12),
-                _buildWorkoutCard(
+                buildWorkoutCard(
                   title: 'Afternoon Yoga',
                   instructor: 'with Mike Chen',
                   calories: '180 kcal',
@@ -396,7 +348,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
                           const SizedBox(height: 16),
                           Container(
                             decoration: BoxDecoration(
-                              gradient: MyColors.customGradient,
+                              gradient: AppColor.customGradient,
                               borderRadius: BorderRadius.circular(50),
                             ),
                             child: ElevatedButton(
@@ -439,7 +391,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
     );
   }
 
-  Widget _buildTimeFrameButton(String timeFrame) {
+  Widget buildTimeFrameButton(String timeFrame) {
     final isSelected = selectedTimeFrame == timeFrame;
 
     return GestureDetector(
@@ -465,7 +417,7 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
     );
   }
 
-  Widget _buildDropdownItem(String item) {
+  Widget buildDropdownItem(String item) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -483,385 +435,6 @@ class _ActivityTrackerTestState extends State<ActivityTrackerScreen> {
           item,
           style: const TextStyle(color: Colors.white), // Added white color
         ),
-      ),
-    );
-  }
-
-  /*old one*/
-
-  // Widget _buildCircularMetric({
-  //   required IconData icon,
-  //   required String title,
-  //   required String value,
-  //   required double progress,
-  //   required Color color,
-  // }) {
-  //   return Column(
-  //     children: [
-  //       Container(
-  //         width: 80,
-  //         height: 80,
-  //         decoration: const BoxDecoration(
-  //           shape: BoxShape.circle,
-  //           color: Color(0xFF242A38),
-  //         ),
-  //         child: Stack(
-  //           alignment: Alignment.center,
-  //           children: [
-  //             SizedBox(
-  //               width: 70,
-  //               height: 70,
-  //               child: CircularProgressIndicator(
-  //                 value: progress,
-  //                 backgroundColor: Colors.grey.withOpacity(0.2),
-  //                 valueColor: AlwaysStoppedAnimation<Color>(color),
-  //                 strokeWidth: 8,
-  //               ),
-  //             ),
-  //             Icon(icon, color: color),
-  //           ],
-  //         ),
-  //       ),
-  //       const SizedBox(height: 8),
-  //       Text(
-  //         title,
-  //         style: const TextStyle(
-  //           fontSize: 12,
-  //           color: Colors.grey,
-  //         ),
-  //       ),
-  //       Text(
-  //         value,
-  //         style: const TextStyle(
-  //           fontSize: 14,
-  //           fontWeight: FontWeight.bold,
-  //           color: Colors.white, // Added white color
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  /* new one */
-  // Widget _buildCircularMetric({
-  //   required IconData icon,
-  //   required String title,
-  //   required String value,
-  //   required double progress,
-  //   required Color color,
-  //   required bool isSmallScreen,
-  // }) {
-  //   // Calculate responsive sizes
-  //   final containerSize = isSmallScreen ? 70.0 : 80.0;
-  //   final progressSize = isSmallScreen ? 60.0 : 70.0;
-  //   final iconSize = isSmallScreen ? 22.0 : 24.0;
-
-  //   return Column(
-  //     children: [
-  //       Container(
-  //         width: containerSize,
-  //         height: containerSize,
-  //         decoration: const BoxDecoration(
-  //           shape: BoxShape.circle,
-  //           color: Color(0xFF242A38),
-  //         ),
-  //         child: Stack(
-  //           alignment: Alignment.center,
-  //           children: [
-  //             SizedBox(
-  //               width: progressSize,
-  //               height: progressSize,
-  //               child: CircularProgressIndicator(
-  //                 value: progress,
-  //                 backgroundColor: Colors.grey.withOpacity(0.2),
-  //                 valueColor: AlwaysStoppedAnimation<Color>(color),
-  //                 strokeWidth: 8,
-  //               ),
-  //             ),
-  //             Icon(
-  //               icon,
-  //               color: color,
-  //               size: iconSize,
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //       const SizedBox(height: 8),
-  //       Text(
-  //         title,
-  //         style: const TextStyle(
-  //           fontSize: 12,
-  //           color: Colors.grey,
-  //         ),
-  //       ),
-  //       Text(
-  //         value,
-  //         style: const TextStyle(
-  //           fontSize: 14,
-  //           fontWeight: FontWeight.bold,
-  //           color: Colors.white,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  Widget _buildBarChart() {
-    // Define different patterns based on the selected time frame
-    List<double> values;
-    List<String> labels;
-
-    switch (selectedTimeFrame) {
-      case 'Day':
-        values = [3, 7, 4, 6, 2, 5, 4, 8, 5, 3, 6, 4];
-        labels = List.generate(12, (index) => '${index * 2}h');
-        break;
-      case 'Week':
-        values = [6, 8, 3, 1, 4, 7, 6];
-        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        break;
-      case 'Month':
-        values = [
-          5,
-          3,
-          2,
-          6,
-          3,
-          6,
-          8,
-          5,
-          7,
-          4,
-          6,
-          5,
-          3,
-          4,
-          2,
-          5,
-          3,
-          6,
-          7,
-          5,
-          4,
-          3,
-          5,
-          7,
-          4,
-          8,
-          6,
-          5,
-          4,
-          3
-        ];
-        labels = List.generate(30, (index) => '${index + 1}');
-        break;
-      case 'Custom':
-        values = [4, 5, 2, 7, 3, 5, 8];
-        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-        break;
-      default:
-        values = [6, 8, 3, 1, 4, 7, 6];
-        labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    }
-
-    return BarChart(
-      BarChartData(
-        alignment: BarChartAlignment.spaceAround,
-        maxY: 10,
-        barGroups: List.generate(
-          values.length,
-          (index) => BarChartGroupData(
-            x: index,
-            barRods: [
-              BarChartRodData(
-                toY: values[index],
-                color: const Color(0xFF2C3D5B),
-                width: selectedTimeFrame == 'Month' ? 6 : 20,
-                borderRadius: BorderRadius.zero,
-              ),
-            ],
-          ),
-        ),
-        titlesData: FlTitlesData(
-          leftTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          rightTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          topTitles: const AxisTitles(
-            sideTitles: SideTitles(showTitles: false),
-          ),
-          bottomTitles: AxisTitles(
-            sideTitles: SideTitles(
-              showTitles: true,
-              getTitlesWidget: (value, meta) {
-                if (selectedTimeFrame == 'Month' &&
-                    value % 5 != 0 &&
-                    value != 0) {
-                  return const SizedBox(); // Only show every 5th label for month view
-                }
-                return Text(
-                  labels[value.toInt()],
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 10,
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-        gridData: const FlGridData(show: false),
-        borderData: FlBorderData(show: false),
-      ),
-    );
-  }
-
-  Widget _buildPieChart() {
-    return PieChart(
-      PieChartData(
-        sectionsSpace: 0,
-        centerSpaceRadius: 60,
-        sections: [
-          PieChartSectionData(
-            value: 45,
-            color: Colors.blue,
-            radius: 20,
-            showTitle: false,
-          ),
-          PieChartSectionData(
-            value: 30,
-            color: Colors.green,
-            radius: 20,
-            showTitle: false,
-          ),
-          PieChartSectionData(
-            value: 25,
-            color: Colors.red,
-            radius: 20,
-            showTitle: false,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildLegendItem(String label, Color color) {
-    return Row(
-      children: [
-        Container(
-          width: 10,
-          height: 10,
-          decoration: BoxDecoration(
-            color: color,
-            shape: BoxShape.circle,
-          ),
-        ),
-        const SizedBox(width: 4),
-        Text(
-          label,
-          style: const TextStyle(
-              fontSize: 12, color: Colors.white), // Added white color
-        ),
-      ],
-    );
-  }
-
-  Widget _buildWorkoutCard({
-    required String title,
-    required String instructor,
-    required String calories,
-    required String duration,
-    required double rating,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: const Color(0xFF242A38),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: Colors.blue.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: const Icon(
-              Icons.show_chart,
-              color: Colors.blue,
-            ),
-          ),
-          const SizedBox(width: 16),
-          Expanded(
-            flex: 3,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
-                    color: Colors.white, // Added white color
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  instructor,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  calories,
-                  style: const TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Added white color
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text(
-                  duration,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                    fontSize: 14,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 8),
-          // Wrap the star rating with MainAxisSize.min
-          Container(
-            constraints: const BoxConstraints(maxWidth: 80),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: List.generate(
-                5,
-                (index) => Icon(
-                  index < rating ? Icons.star : Icons.star_border,
-                  color: Colors.amber,
-                  size: 14,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

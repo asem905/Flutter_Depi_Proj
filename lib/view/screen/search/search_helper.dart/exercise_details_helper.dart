@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/data/model/exercise_model.dart';
+import 'package:flutter_application_depi/model/exercise_model.dart';
 import 'package:flutter_application_depi/view/widget/exercise_details/card_list.dart';
 import 'package:flutter_application_depi/view/widget/exercise_details/custom_body_details.dart';
 import 'package:flutter_application_depi/view/widget/exercise_details/section_title.dart';

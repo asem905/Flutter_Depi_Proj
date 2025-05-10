@@ -1,7 +1,7 @@
 // Welcome/Onboarding Screen
 import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/custom_colors.dart';
+import 'package:flutter_application_depi/utils/constants/custom_colors.dart';
 import 'package:flutter_application_depi/view/screen/Home/start_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -87,8 +87,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(builder: (context) => const HomePage()),
-                        (Route<dynamic> route) =>
-                            false, // Removes all previous routes
+                        (routes) =>false, // Removes all previous routes
                       );
                     },
                     style: ElevatedButton.styleFrom(

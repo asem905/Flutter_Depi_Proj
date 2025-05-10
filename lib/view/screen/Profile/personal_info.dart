@@ -1,52 +1,37 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_depi/core/services/services.dart';
+import 'package:flutter_application_depi/utils/constants/color.dart';
 import 'package:flutter_application_depi/view/screen/Profile/edit_personal_info.dart';
 
 class PersonalInfo extends StatelessWidget {
-  const PersonalInfo({super.key});
+  PersonalInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.black.withOpacity(0.7), Colors.black],
-          ),
-          image: DecorationImage(
-            image: const AssetImage('assets/profile/gym.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-              Colors.black.withOpacity(0.6),
-              BlendMode.dstATop,
-            ),
-          ),
-        ),
-        child: const SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Profile header
-                  ProfileHeader(),
-                  SizedBox(height: 16),
+      backgroundColor: const Color(0xFF1A1D2A),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile header
+                ProfileHeader(),
+                const SizedBox(height: 16),
 
-                  // Metrics Grid
-                  MetricsGrid(),
-                  SizedBox(height: 16),
+                // Metrics Grid
+                const MetricsGrid(),
+                const SizedBox(height: 16),
 
-                  // Personal Information Section
-                  PersonalInformationCard(),
-                  SizedBox(height: 16),
+                // Personal Information Section
+                PersonalInformationCard(),
+                const SizedBox(height: 16),
 
-                  // Weekly Activity Section
-                  WeeklyActivityCard(),
-                ],
-              ),
+                // Weekly Activity Section
+                const WeeklyActivityCard(),
+              ],
             ),
           ),
         ),
@@ -56,16 +41,16 @@ class PersonalInfo extends StatelessWidget {
 }
 
 class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({super.key});
-
+  ProfileHeader({super.key});
+  var prefs = InitServices.sharedPref;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
+        const CircleAvatar(
             radius: 30,
-            backgroundColor: Colors.deepPurple.shade100,
-            child: const Icon(
+            backgroundColor: AppColor.secBlue,
+            child: Icon(
               Icons.person_2,
               size: 40,
             )),
@@ -73,9 +58,9 @@ class ProfileHeader extends StatelessWidget {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text(
-              'Alex Johnson',
-              style: TextStyle(
+            Text(
+              prefs.getString("Name")!,
+              style: const TextStyle(
                 color: Colors.white,
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
@@ -87,7 +72,7 @@ class ProfileHeader extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.8),
+                    color: AppColor.primaryBlue,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -103,7 +88,7 @@ class ProfileHeader extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.deepPurple.withOpacity(0.8),
+                    color: AppColor.primaryBlue,
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: const Text(
@@ -125,16 +110,16 @@ class ProfileHeader extends StatelessWidget {
             alignment: Alignment.center,
             // padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(
-              color: Colors.deepPurple,
+              color: AppColor.primaryBlue,
               shape: BoxShape.circle,
             ),
             child: IconButton(
               onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => const EditPersonalInfoPage(),
-                    ),
-                  );
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => const EditPersonalInfoPage(),
+                  ),
+                );
               },
               icon: const Icon(
                 Icons.edit,
@@ -167,7 +152,7 @@ class MetricsGrid extends StatelessWidget {
           title: 'Daily Activity',
           value: '78%',
           progressValue: 0.78,
-          progressColor: Colors.deepPurple,
+          progressColor: AppColor.primaryBlue,
           isProgress: true,
         ),
         MetricCard(
@@ -181,7 +166,7 @@ class MetricsGrid extends StatelessWidget {
           icon: Icons.directions_walk,
           title: 'Steps',
           value: '8,432',
-          progressColor: Colors.blueAccent,
+          progressColor: AppColor.primaryBlue,
         ),
         MetricCard(
           icon: Icons.local_fire_department_outlined,
@@ -219,7 +204,7 @@ class MetricCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.deepPurple.shade900.withOpacity(0.6),
+        color: AppColor.containerColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: isProgress
@@ -323,20 +308,21 @@ class MetricCard extends StatelessWidget {
 }
 
 class PersonalInformationCard extends StatelessWidget {
-  const PersonalInformationCard({super.key});
+  var prefs = InitServices.sharedPref;
+  PersonalInformationCard({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.deepPurple.shade900.withOpacity(0.6),
+        color: AppColor.containerColor,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
+          const Text(
             'Personal Information',
             style: TextStyle(
               color: Colors.white,
@@ -344,18 +330,19 @@ class PersonalInformationCard extends StatelessWidget {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // First row: Age, Height, Weight
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              PersonalInfoItem(title: 'Age', value: '28 years'),
-              PersonalInfoItem(title: 'Height', value: '175 cm'),
-              PersonalInfoItem(title: 'Weight', value: '75 kg'),
+              PersonalInfoItem(title: "Age", value: prefs.getInt("age")),
+              PersonalInfoItem(title: 'Height', value: prefs.getInt("height")),
+              PersonalInfoItem(
+                  title: 'Weight', value: prefs.getDouble("weight")!),
             ],
           ),
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
 
           // Second row: BMI, Activity Level, Goal
           Row(
@@ -375,9 +362,9 @@ class PersonalInformationCard extends StatelessWidget {
 
 class PersonalInfoItem extends StatelessWidget {
   final String title;
-  final String value;
+  var value;
 
-  const PersonalInfoItem({
+  PersonalInfoItem({
     super.key,
     required this.title,
     required this.value,
@@ -397,7 +384,7 @@ class PersonalInfoItem extends StatelessWidget {
         ),
         const SizedBox(height: 4),
         Text(
-          value,
+          value.toString(),
           style: const TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -410,7 +397,7 @@ class PersonalInfoItem extends StatelessWidget {
 }
 
 class WeeklyActivityCard extends StatelessWidget {
-  const WeeklyActivityCard({super.key});
+  const WeeklyActivityCard({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -421,7 +408,7 @@ class WeeklyActivityCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.indigo.shade900.withOpacity(0.7),
+        color: AppColor.containerColor,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -474,7 +461,7 @@ class ActivityBar extends StatelessWidget {
           width: 35,
           height: 100 * level,
           decoration: BoxDecoration(
-            color: Colors.deepPurple.shade400,
+            color: AppColor.primaryBlue,
             borderRadius: BorderRadius.circular(8),
           ),
         ),

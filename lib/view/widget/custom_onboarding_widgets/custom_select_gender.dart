@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_depi/constants/color.dart'; 
+import 'package:flutter_application_depi/utils/constants/color.dart';
+
 
 class GenderSelected extends StatelessWidget {
   final String gender;
